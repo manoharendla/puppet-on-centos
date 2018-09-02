@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
   config.vm.define "puppetserver" do |puppetserver|
     $serverscript = <-SCRIPT
-	echo "Enable passeger repo"
+    echo "Enable passeger repo"
     curl --fail -sSLo /etc/yum.repos.d/passenger.repo https://oss-binaries.phusionpassenger.com/yum/definitions/el-passenger.repo
     echo "Install NTP"
     yum -y install ntpdate
@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
     sudo gem install r10k
     yum -y  install git
     echo "Done installing deps"
-	SCRIPT
+    SCRIPT
     puppetserver.vm.box = "centos/7"
     puppetserver.vm.network "public_network", :bridge => "Ethernet adapter VirtualBox Host-Only Network #3"
     puppetserver.vm.network "forwarded_port", guest:8140, host:8140
@@ -36,11 +36,11 @@ Vagrant.configure("2") do |config|
       v.memory = 2048
       v.cpus   = 2
     end
-	puppetserver.vm.provision "shell", inline: $serverscript	 
+    puppetserver.vm.provision "shell", inline: $serverscript	 
   end
   config.vm.define "puppetagent" do |puppetagent|
     $agentscript = <-SCRIPT
-	echo "Enable repo on agent"
+    echo "Enable repo on agent"
     rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
     echo "Install NTP"
     yum -y install ntpdate
@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
     echo "Enable puppet to start on boot up"
     /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
     echo "done..."
-	SCRIPT
+    SCRIPT
     puppetagent.vm.box = "minimal/centos7"
     puppetagent.vm.network "public_network", :bridge => "Ethernet adapter VirtualBox Host-Only Network #3"
     puppetagent.vm.provider "virtualbox" do |v|
@@ -65,5 +65,6 @@ Vagrant.configure("2") do |config|
       v.memory = 1024
       v.cpus   = 1
     end
+    puppetagent.vm.provision "shell", inline: $agentscript
   end
 end
