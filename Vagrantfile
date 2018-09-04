@@ -51,6 +51,8 @@ Vagrant.configure("2") do |config|
     echo "Explicitly setting the UTC time stamp to match with the server"
     sudo unlink /etc/localtime 
     sudo ln -s /usr/share/zoneinfo/Etc/GMT+6 /etc/localtime
+    echo "Installing wget.."
+    yum install -y wget
     echo "Installing puppet agent"
     yum install -y puppet-agent
     echo "done installing Puppet agent"
