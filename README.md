@@ -46,3 +46,5 @@ node default {
 3. vagrant up 
 
 Note: Vagrant should be installed. 
+
+[![Puppet Installtion on Centos](https://img.youtube.com/vi/VXO5TMQtWx4/0.jpg)](https://www.youtube.com/watch?v=VXO5TMQtWx4)
